@@ -12,4 +12,18 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Development-only: proxy `/api` to the backend to avoid CORS issues.
+  // Requests to `/api/*` from the dev server will be forwarded to http://localhost:9090
+  // Remove or adjust when deploying to production (backend should handle CORS or same-origin).
+  vite: {
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://localhost:9090",
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+    },
+  },
 });

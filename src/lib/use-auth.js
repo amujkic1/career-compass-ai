@@ -6,11 +6,7 @@ function subscribe(cb) {
   return authStore.subscribe(cb);
 }
 
-/**
- * Reactive auth hook. Reads the current user/token from the auth store and
- * re-renders consumers whenever the session changes.
- */
-export function useAuth() {
+export function useAuthState() {
   const user = useSyncExternalStore(
     subscribe,
     () => authStore.getUser(),
@@ -21,6 +17,16 @@ export function useAuth() {
     () => authStore.isAuthenticated(),
     () => false,
   );
+
+  return { user, isAuthenticated };
+}
+
+/**
+ * Reactive auth hook. Reads the current user/token from the auth store and
+ * re-renders consumers whenever the session changes.
+ */
+export function useAuth() {
+  const { user, isAuthenticated } = useAuthState();
   const navigate = useNavigate();
 
   return {

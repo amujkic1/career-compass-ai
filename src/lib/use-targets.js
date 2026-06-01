@@ -1,11 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
 import { targetsCache } from "@/lib/targets-store";
-import { authStore } from "@/lib/auth-store";
+import { useAuthState } from "@/lib/use-auth";
 
 const TARGETS_KEY = ["targets"];
 
 export function useTargets() {
+  const { isAuthenticated } = useAuthState();
+
   return useQuery({
     queryKey: TARGETS_KEY,
     queryFn: async () => {
@@ -21,7 +23,7 @@ export function useTargets() {
         return targetsCache.getAll();
       }
     },
-    enabled: authStore.isAuthenticated(),
+    enabled: isAuthenticated,
   });
 }
 

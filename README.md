@@ -15,7 +15,7 @@ bun run dev      # starts the dev server
 Set the backend base URL (no trailing slash) in `.env`:
 
 ```
-VITE_API_BASE_URL=http://localhost:8080
+VITE_API_BASE_URL=http://localhost:9090
 ```
 
 Restart the dev server after changing env values. See `.env.example`.
